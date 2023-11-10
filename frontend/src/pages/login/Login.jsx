@@ -1,5 +1,6 @@
 import React from 'react'
 import backgroundImg from '../../assets/bg2.svg'
+import Logo from '../../assets/Logo.jpg'
 import { Link } from 'react-router-dom'
 
 
@@ -17,6 +18,7 @@ const Login = () => {
       <div className='grid md:grid-cols-4'>
         <div className="md:col-span-2">
           <div className="h-full flex justify-center items-center">
+            {/* <img className='w-20 h-20' src={Logo} alt="" /> */}
           <p className='text-white font-bold text-3xl'>Welcome To Employee Management System</p> 
           </div>
         </div>
@@ -25,6 +27,8 @@ const Login = () => {
   <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+            {/* New Logo */}
+          <img className='w-72 mx-auto h-20' src={Logo} alt="" />
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                   Sign in to your account
               </h1>
@@ -46,7 +50,7 @@ const Login = () => {
                             <label htmlFor="remember" className="text-gray-500 dark:text-gray-300">Remember me</label>
                           </div>
                       </div>
-                      <a href="#" className="text-sm font-medium text-gray-500 dark:text-gray-300 hover:underline">Forgot password?</a>
+                      <Link to="/" className="text-sm font-medium text-gray-500 dark:text-gray-300 hover:underline">Forgot password?</Link>
                   </div>
                   <Link to={'/'}><button type="submit" className="w-full text-white bg-cyan-600 mt-2 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Sign in</button></Link> 
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
