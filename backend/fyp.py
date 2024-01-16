@@ -32,6 +32,15 @@ def get_attendance():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/post_attendance', methods=['POST'])
+def post_attendance():
+    try:
+        id = request.json['id']
+        result.document(id).set(request.json)
+        return jsonify({"success": True}), 200
+    except Exception as e:
+        return f"An Error Occured: {e}"
+
 
 if __name__ == '__main__':
     app.run(debug=True)
