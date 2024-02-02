@@ -44,9 +44,9 @@ const EmployeeMaster = () => {
         employeeCode: 'EMP001',
         roleName: 'Manager',
         emailId: 'john.doe@example.com',
-        createdBy: 'Admin',
-        createdOn: '2023-11-01',
-        modifiedBy: 'Admin',
+        date: '07-11-2023',
+        timeIn: '09:15:22',
+        timeOut: '18:30:22',
         modifiedOn: '2023-11-01',
         active: 'Y',
         employeeId: 1,
@@ -57,11 +57,9 @@ const EmployeeMaster = () => {
         employeeCode: 'EMP002',
         roleName: 'Employee',
         emailId: 'jane.smith@example.com',
-        createdBy: 'Admin',
-        createdOn: '2023-11-01',
-        modifiedBy: 'Admin',
-        modifiedOn: '2023-11-01',
-        active: 'N',
+        date: '07-11-2023',
+        timeIn: '09:15:22',
+        timeOut: '18:30:22',
         employeeId: 2,
       },
     ];
@@ -245,29 +243,36 @@ const EmployeeMaster = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "SI", flex: 0.5, sortable: false, disableColumnMenu: true },
+    { field: "id", headerName: "ID", flex: 0.5, sortable: false, disableColumnMenu: true },
+    // {
+    //   field: "action",
+    //   headerName: "Action",
+    //   sortable: false,
+    //   disableColumnMenu: true,
+    //   flex: 0.6,
+    //   renderCell: ({ row }) => {
+    //     return (
+    //       <Box
+    //         m="auto"
+    //         display="flex"
+    //         justifyContent="center"
+    //         sx={{
+    //           cursor: 'pointer',
+    //           color: '#4ED192'
+    //         }}
+    //         onClick={() => handleEditted(row.employeeId)}
+    //       >
+    //         {accessPermissions.canEdit ? <Edit /> : <Visibility />}
+    //       </Box>
+    //     );
+    //   },
+    // },
     {
-      field: "action",
-      headerName: "Action",
-      sortable: false,
+      field: "date",
+      headerName: "Date",
       disableColumnMenu: true,
-      flex: 0.6,
-      renderCell: ({ row }) => {
-        return (
-          <Box
-            m="auto"
-            display="flex"
-            justifyContent="center"
-            sx={{
-              cursor: 'pointer',
-              color: '#4ED192'
-            }}
-            onClick={() => handleEditted(row.employeeId)}
-          >
-            {accessPermissions.canEdit ? <Edit /> : <Visibility />}
-          </Box>
-        );
-      },
+      minWidth: 100,
+      flex: 1.2,
     },
     {
       field: "employeeName",
@@ -298,32 +303,18 @@ const EmployeeMaster = () => {
       flex: 1.4,
     },
     {
-      field: "createdBy",
-      headerName: "Created By",
+      field: "timeIn",
+      headerName: "Time In",
       disableColumnMenu: true,
       minWidth: 100,
       flex: 1,
     },
     {
-      field: "createdOn",
-      headerName: "Created On",
+      field: "timeOut",
+      headerName: "Time Out",
       disableColumnMenu: true,
       minWidth: 100,
       flex: 1,
-    },
-    {
-      field: "modifiedBy",
-      headerName: "Updated By",
-      disableColumnMenu: true,
-      minWidth: 100,
-      flex: 1,
-    },
-    {
-      field: "modifiedOn",
-      headerName: "Updated On",
-      disableColumnMenu: true,
-      minWidth: 100,
-      flex: 0.9,
     },
     {
       field: "active",
@@ -362,7 +353,7 @@ const EmployeeMaster = () => {
         <Grid item xs={12} sm={12} md={4} lg={4}>
           <Box display="flex" sx={{ flexGrow: 1 }}>
             <form onSubmit={handleSearch}>
-              <Box display="flex"
+              <Box display="flex" className="bg-gray-200"
                 sx={{
                   backgroundColor: green,
                   borderRadius: '3px',
@@ -407,7 +398,7 @@ const EmployeeMaster = () => {
           </CardActions>
         </Grid>
       </Grid>
-      <Box
+      <Box 
         height="75vh"
         sx={{
           "& .MuiDataGrid-root": {
@@ -437,7 +428,7 @@ const EmployeeMaster = () => {
             color: `${green} !important`,
           },
         }}>
-        <Grid item xs={12} sm={12} md={12} lg={12}>
+        {/* <Grid item xs={12} sm={12} md={12} lg={12}>
           <Box sx={{ position: 'relative', right: 0, mb: 1, ml: 0.25, borderBottom: 0 }}>
             <FormControl sx={{ mb: 0.5, minWidth: 120 }}>
               <Select size="small"
@@ -454,7 +445,7 @@ const EmployeeMaster = () => {
               </Select>
             </FormControl>
           </Box>
-        </Grid>
+        </Grid> */}
         <DataGrid
           rows={employeeData}
           columns={columns}

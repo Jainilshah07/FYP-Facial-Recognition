@@ -100,12 +100,12 @@ const Sidebar = () => {
                         </ListItem>
                         <AccordionBody className="py-1">
                             <List className="p-0">
-                                <ListItem>
+                                <Link to={'/attendance'}> <ListItem>
                                     <ListItemPrefix>
                                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                                     </ListItemPrefix>
                                     Based On Attendance
-                                </ListItem>
+                                </ListItem> </Link>
                                 <ListItem>
                                     <ListItemPrefix>
                                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
@@ -115,6 +115,12 @@ const Sidebar = () => {
                             </List>
                         </AccordionBody>
                     </Accordion>
+                    <Link to={'/attendance'}><ListItem>
+                        <ListItemPrefix>
+                            <InboxIcon className="h-5 w-5" />
+                        </ListItemPrefix>
+                        Attendance
+                    </ListItem></Link> 
                     <ListItem>
                         <ListItemPrefix>
                             <InboxIcon className="h-5 w-5" />

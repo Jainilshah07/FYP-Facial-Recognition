@@ -9,9 +9,9 @@ const BasicPie = () => {
       series={[
         {
           data: [
-            { id: 0, value: 10, label: 'series A' },
-            { id: 1, value: 15, label: 'series B' },
-            { id: 2, value: 20, label: 'series C' },
+            { id: 0, value: 10, label: 'Support' },
+            { id: 1, value: 15, label: 'Security' },
+            { id: 2, value: 20, label: 'HR' },
           ],
         },
       ]}
