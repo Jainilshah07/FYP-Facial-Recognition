@@ -1,0 +1,22 @@
+import React from 'react'
+import Sidebar from '../home/Sidebar'
+import EmployeeDetails from './EmployeeDetails'
+
+const Employee = () => {
+  return (
+    <div className='grid grid-cols-5 h-screen'>
+        <div className="col-span-1 border-black border-2">
+            <Sidebar />
+        </div>
+        <div className="col-span-4 border-black border-2">
+        <p className='text-2xl font-semibold text-left my-4'><span className='mx-8 text-lg'>LOGO</span>Company Dashboard</p>
+        <div className='border-t-2 my-2 border-black'>
+            <EmployeeDetails />
+        </div>
+        </div>
+
+    </div>
+  )
+}
+
+export default Employee
