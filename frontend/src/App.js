@@ -6,6 +6,7 @@ import Home from "./pages/home/Home";
 import EmployeeMaster from "./pages/attendance/EmployeeMaster";
 import Dashboard from "./pages/home/Dashboard";
 import BarChartJs from "./pages/home/BarChartJs";
+import Employee from "./pages/attendance/Employee";
 
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
           <Route path="/login" element={<Login />} ></Route>
           <Route path="/register" element={<Register />} ></Route>
           <Route path="/" element={<Home />} ></Route>
-          <Route path="/attendance" element={<EmployeeMaster />} ></Route>
+          {/* <Route path="/attendance" element={<EmployeeMaster />} ></Route> */}
+          <Route path="/attendance" element={<Employee />} ></Route>
         </Routes>
         {/* <Dashboard /> */}
         {/* <BarChartJs /> */}
