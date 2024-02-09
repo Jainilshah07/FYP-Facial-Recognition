@@ -32,9 +32,9 @@ const Sidebar = () => {
         <div>
             <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
                 <div className="mb-2 p-4">
-                    <Typography variant="h5" color="blue-gray">
+                    <Link to={'/'}> <Typography variant="h5" color="blue-gray">
                         Spider Cloud
-                    </Typography>
+                    </Typography></Link>
                 </div>
                 <List>
                     <Accordion
@@ -120,6 +120,12 @@ const Sidebar = () => {
                             <InboxIcon className="h-5 w-5" />
                         </ListItemPrefix>
                         Attendance
+                    </ListItem></Link> 
+                    <Link to={'/employee-details'}><ListItem>
+                        <ListItemPrefix>
+                            <InboxIcon className="h-5 w-5" />
+                        </ListItemPrefix>
+                        Employee Details
                     </ListItem></Link> 
                     <ListItem>
                         <ListItemPrefix>

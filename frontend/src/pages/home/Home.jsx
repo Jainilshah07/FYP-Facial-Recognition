@@ -12,7 +12,7 @@ const Home = () => {
       </div>
       <div className="col-span-3 border-black border-2">
         {/* Company Logo */}
-        <p className='text-2xl font-semibold text-left my-8'><span className='mx-8 text-lg'>LOGO</span>Company Dashboard</p>
+        <p className='text-2xl font-semibold text-left my-4'><span className='mx-8 text-lg'>LOGO</span>Company Dashboard</p>
         <div className='border-t-2 pt-8 border-black'>
           <Analytics />
         </div>

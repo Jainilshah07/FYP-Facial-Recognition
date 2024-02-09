@@ -1,14 +1,14 @@
 import React from 'react'
-import {db} from '../../firebase.js'
+// import {db} from '../../firebase.js'
 import {collection, addDoc, Timestamp} from 'firebase/firestore'
 // import { dataref } from "./firebase"
 
 const ActivityLog = () => {
   const handleSubmit = () => {
-    db.ref("user").set({
-      name:"JJ",
-      title:"This is the title",
-    }).catch(alert)
+    // db.ref("user").set({
+    //   name:"JJ",
+    //   title:"This is the title",
+    // }).catch(alert)
   }
   return (
     <div>
