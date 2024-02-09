@@ -5,14 +5,10 @@ from firebase_admin import credentials, firestore, initialize_app
 app = Flask(__name__)
 
 # Initialize Firestore DB
-cred = credentials.Certificate('key.json')
-default_app = initialize_app(cred)
 db = firestore.client()
-result = db.collection('attendance')
+result = db.collection('employee_details')
 
-# Endpoint to get all elements in the attendance collection
-# @app.route('/get_attendance', methods=['GET','POST'])
-def get_attendance():
+def get_employee_details():
     if request.method == "GET":
         try:
             # Get all documents in the "attendance" collection
@@ -34,25 +30,6 @@ def get_attendance():
 
         except Exception as e:
             return jsonify({'error': str(e)}), 500
-    
-    '''Example for post request on postman
-        #? Hit on http://127.0.0.1/get_attendance
-        The raw json format:
-            #* {"id": "EMP004",
-            #* "Department": "IT",
-            #* "Email": "jay@gmail.com",
-            #* "Name": "JJ",
-            #* "TimeIn": "Fri, 15 Dec 2023 06:33:23 GMT",
-            #* "TimeOut": "Fri, 15 Dec 2023 18:30:00 GMT"}
-    '''
-        
-    if request.method == 'POST':
-        try:
-            id = request.json['id']
-            result.document(id).set(request.json)
-            return jsonify({"success": True}), 200
-        except Exception as e:
-            return f"An Error Occured: {e}"
         
     if request.method == 'PUT':
         try:
@@ -67,7 +44,7 @@ def get_attendance():
         except Exception as e:
             return f"An Error Occured: {e}"
         
-def attendance_delete(id):
+def employee_delete(id):
     if request.method == 'DELETE':
         try:
             result.document(id).delete()
