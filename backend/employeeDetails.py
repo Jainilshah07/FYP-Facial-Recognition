@@ -51,3 +51,21 @@ def employee_delete(id):
             return jsonify({'success': True})
         except Exception as e:
             return f"An Error Occured: {e}"
+        
+def get_specific_employee(id):
+    if request.method == "GET":
+        try:
+            # Get all documents in the "attendance" collection
+            documents = result.stream()
+            # Create a dictionary to store the results
+            result_dict = {}
+
+            # Iterate through each document
+            for doc in documents:
+                # Extract data from the document
+                if (id == doc.id):  # Employee ID is the document ID
+                
+                    return jsonify(doc.to_dict()), 200
+
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
