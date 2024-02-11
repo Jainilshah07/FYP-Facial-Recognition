@@ -1,6 +1,6 @@
 import React from 'react'
 // import {db} from '../../firebase.js'
-import {collection, addDoc, Timestamp} from 'firebase/firestore'
+// import {collection, addDoc, Timestamp} from 'firebase/firestore'
 // import { dataref } from "./firebase"
 
 const ActivityLog = () => {

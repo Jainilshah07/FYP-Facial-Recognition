@@ -1,7 +1,6 @@
 import React from 'react'
 import Sidebar from './Sidebar'
 import Analytics from './Analytics'
-import Logo from '../../assets/Logo.jpg'
 import ActivityLog from './ActivityLog'
 
 const Home = () => {

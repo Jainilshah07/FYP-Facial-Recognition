@@ -74,8 +74,8 @@ const AttendanceDetails = () => {
                 <TableRow key={index}>
                   <TableCell>{employeeId}</TableCell>
                   <TableCell>{attendanceData[employeeId].Name}</TableCell>
-                  <TableCell>{attendanceData[employeeId].Department}</TableCell>
                   <TableCell><img src={attendanceData[employeeId].imgUrl} height='30px' width='60px' /></TableCell>
+                  <TableCell>{attendanceData[employeeId].Department}</TableCell>
                   <TableCell>{attendanceData[employeeId].Email}</TableCell>
                   <TableCell>{attendanceData[employeeId].TimeIn}</TableCell>
                   <TableCell>{attendanceData[employeeId].TimeOut}</TableCell>

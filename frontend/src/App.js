@@ -3,12 +3,10 @@ import "./App.css";
 import Login from "./pages/login/Login";
 import Register from "./pages/login/Register";
 import Home from "./pages/home/Home";
-import EmployeeAttendance from "./pages/attendance/NotUsing";
-import EmployeeDetails from "./pages/employee/EmployeeDetails";
 import AddEmployee from "./pages/employee/AddEmployee";
-import Add from "./pages/employee/Add";
 import Employee from "./pages/employee/Employee";
 import Attendance from "./pages/attendance/Attendance";
+import EditEmployee from "./pages/employee/EditEmployee";
 
 
 function App() {
@@ -20,9 +18,9 @@ function App() {
           <Route path="/register" element={<Register />} ></Route>
           <Route path="/" element={<Home />} ></Route>
           <Route path="/attendance" element={<Attendance />} ></Route>
-          <Route path="/add-emp" element={<AddEmployee />} ></Route>
-          <Route path="/add" element={<Add />} ></Route>
+          <Route path="/add-employee" element={<AddEmployee />} ></Route>
           <Route path="/employee-details" element={<Employee/>} ></Route>
+          <Route path="/employee-details/:id" element={<EditEmployee/>} ></Route>
         </Routes>
         </div>
       </div>

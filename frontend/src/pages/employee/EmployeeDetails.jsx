@@ -4,18 +4,20 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
+import { EditModal } from './EditModal';
 
 const EmployeeDetails = () => {
-  const [attendanceData, setAttendanceData] = useState([]);
+  const [employeeData, setEmployeeData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10); // Number of entries to display per page
   const navigate = useNavigate();
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/get_attendance');
-        setAttendanceData(Object.values(response.data));
+        const response = await axios.get('/get_employee_details');
+        setEmployeeData(Object.values(response.data));
       } catch (error) {
         console.error('Error fetching attendance data:', error);
       }
@@ -36,11 +38,18 @@ const EmployeeDetails = () => {
   const handleEdit = (id) => {
     // Implement edit functionality here
     console.log("Edit button clicked for ID:", id);
+    navigate(`/employee-details/`+id)
   };
 
   const handleDelete = (id) => {
-    // Implement delete functionality here
-    console.log("Delete button clicked for ID:", id);
+    <EditModal />
+    console.log("handleDelete Clicked");
+    setIsEditModalOpen(true);
+    // navigate(`/get_employee_details/${id}`)
+  };
+  const handleClose = () => {
+    setIsEditModalOpen(false);
+    // setEmployeeData(null);
   };
 
   const downloadTable = () => {
@@ -48,7 +57,7 @@ const EmployeeDetails = () => {
     console.log("Downloading table attendance...");
   };
   const handleAdd = () => {
-    navigate('/add');
+    navigate('/add-employee');
   }
 
   return (
@@ -69,18 +78,20 @@ const EmployeeDetails = () => {
               </TableRow>
             </TableHead>    
             <TableBody>
-              {Object.keys(attendanceData).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((employeeId, index) => (
+              {Object.keys(employeeData).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((employeeId, index) => (
                 <TableRow key={index}>
                   <TableCell>{employeeId}</TableCell>
-                  <TableCell>{attendanceData[employeeId].Name}</TableCell>
-                  <TableCell>{attendanceData[employeeId].Department}</TableCell>
-                  <TableCell><img src={attendanceData[employeeId].imgUrl} height='30px' width='60px' /></TableCell>
-                  <TableCell>{attendanceData[employeeId].Email}</TableCell>
+                  <TableCell>{employeeData[employeeId].Name}</TableCell>
+                  <TableCell>{employeeData[employeeId].Department}</TableCell>
+                  <TableCell><img src={employeeData[employeeId].imgUrl} alt='' height='30px' width='60px' /></TableCell>
+                  <TableCell>{employeeData[employeeId].Email}</TableCell>
                   <TableCell>
-                  <IconButton onClick={() => handleEdit(Object.keys(employeeId)[0])} color="primary">
+                    <IconButton onClick={() => handleEdit(employeeId)} color="primary">
                       <EditIcon />
                     </IconButton>
-                    <IconButton onClick={() => handleDelete(Object.keys(employeeId)[0])} color="secondary">
+                    {isEditModalOpen && <EditModal isOpen={isEditModalOpen} handleClose={handleClose}/>}
+
+                    <IconButton onClick={() => handleDelete(employeeId)} color="secondary">
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -90,9 +101,9 @@ const EmployeeDetails = () => {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[10, 25, 50]}
+          rowsPerPageOptions={[3, 25, 50]}
           component="div"
-          count={attendanceData.length}
+          count={employeeData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

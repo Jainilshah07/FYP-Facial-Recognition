@@ -1,12 +1,9 @@
-// import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
 const EmployeeAttendance = () => {
   const [attendanceData, setAttendanceData] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const getAttendanceData = async () => {
