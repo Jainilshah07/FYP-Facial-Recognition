@@ -10,6 +10,10 @@ app = Flask(__name__)
 def attendance():
     return getAttendance.get_attendance()
 
+@app.route('/get_specific_attendance/<id>', methods=['GET'])
+def specific_attendance(id):
+    return getAttendance.get_specific_attendance(id)
+
 @app.route('/get_attendance/<id>', methods=['DELETE'])
 def del_attendance(id):
     return getAttendance.attendance_delete(id)

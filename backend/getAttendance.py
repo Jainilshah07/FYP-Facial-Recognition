@@ -78,7 +78,7 @@ def attendance_delete(id):
         except Exception as e:
             return f"An Error Occured: {e}"
         
-def get_attendance():
+def download_attendance():
     if request.method == "GET":
         try:
             data_list = []
@@ -102,5 +102,23 @@ def get_attendance():
 
             return jsonify(result_dict), 200
         
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
+        
+def get_specific_attendance(id):
+    if request.method == "GET":
+        try:
+            # Get all documents in the "attendance" collection
+            documents = result.stream()
+            # Create a dictionary to store the results
+            result_dict = {}
+
+            # Iterate through each document
+            for doc in documents:
+                # Extract data from the document
+                if (id == doc.id):  # Employee ID is the document ID
+                
+                    return jsonify(doc.to_dict()), 200
+
         except Exception as e:
             return jsonify({'error': str(e)}), 500
