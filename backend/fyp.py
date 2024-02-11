@@ -14,6 +14,10 @@ def attendance():
 def del_attendance(id):
     return getAttendance.attendance_delete(id)
 
+@app.route('/download_attendance', methods=['GET'])
+def down_attendance():
+    return getAttendance.download_attendance()
+
 @app.route('/get_employee_details',methods=['GET','PUT'])
 def employee():
     return employeeDetails.get_employee_details()

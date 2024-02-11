@@ -1,0 +1,6 @@
+Department,TimeIn,TimeOut,Name,Email,id,imgUrl
+IT,2023-12-15 06:33:23.389000+00:00,2023-12-15 18:30:00.769000+00:00,JJ,jay@gmail.com,,
+CS,"Fri, 15 Dec 2023 06:33:23 GMT","Fri, 15 Dec 2023 18:30:00 GMT",JJ123,jaydh@gmail.com,EMP002,
+IT,"Fri, 15 Dec 2023 06:33:23 GMT","Fri, 15 Dec 2023 18:30:00 GMT",JJ,jay12@gmail.com,EMP003,
+IT,"Fri, 15 Dec 2023 06:33:23 GMT","Fri, 15 Dec 2023 18:30:00 GMT",JJ,jay@gmail.com,EMP004,
+Science,,,Xyz,xys,,https://firebasestorage.googleapis.com/v0/b/fyp-79526.appspot.com/o/Imgs%2FXyz?alt=media&token=73813604-f487-4f07-9a82-9ef3c3e02da2

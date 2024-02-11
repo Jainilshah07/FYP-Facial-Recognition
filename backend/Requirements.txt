@@ -1,2 +1,5 @@
 Django Setup
 Sql connection
+Pandas
+Firebase admin
+Flask

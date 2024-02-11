@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
 from firebase_admin import credentials, firestore, initialize_app
+import csv
+import pandas as pd
 
 # Initialize Flask App
 app = Flask(__name__)
@@ -15,6 +17,7 @@ result = db.collection('attendance')
 def get_attendance():
     if request.method == "GET":
         try:
+            data_list = []
             # Get all documents in the "attendance" collection
             documents = result.stream()
 
@@ -29,7 +32,7 @@ def get_attendance():
 
                 # Add the data to the result dictionary
                 result_dict[employee_id] = data
-
+                
             return jsonify(result_dict), 200
 
         except Exception as e:
@@ -74,3 +77,30 @@ def attendance_delete(id):
             return jsonify({'success': True})
         except Exception as e:
             return f"An Error Occured: {e}"
+        
+def get_attendance():
+    if request.method == "GET":
+        try:
+            data_list = []
+            # Get all documents in the "attendance" collection
+            documents = result.stream()
+
+            # Create a dictionary to store the results
+            result_dict = {}
+
+            # Iterate through each document
+            for doc in documents:
+                # Extract data from the document
+                data = doc.to_dict()
+                employee_id = doc.id  # Employee ID is the document ID
+
+                # Add the data to the result dictionary
+                result_dict[employee_id] = data
+                data_list.append(data)
+                df = pd.DataFrame(data_list)
+                df.to_csv('my_file.csv',index=False, header=True)
+
+            return jsonify(result_dict), 200
+        
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
