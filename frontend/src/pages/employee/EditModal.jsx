@@ -9,39 +9,21 @@ import {
   DialogFooter,
 } from "@material-tailwind/react";
  
-export function EditModal({ isOpen, handleClose }) {
+export function EditModal({ isOpen, handleClose, handleEdit, employee  }) {
+  const [updatedEmployee, setUpdatedEmployee] = useState({ ...employee });
 
-    const {id} = useParams()
-    const [employee, setEmployee] = useState({
-        Name: "",
-        Email: "",
-        Department: "",
-      });
-      const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleEdit(updatedEmployee);
+  };
 
-      useEffect(()=> {
-        axios.get(`/get_employee_details/`+id)
-        .then(result => {
-            setEmployee({
-                ...employee,
-                Name: result.data.Result[0].Name,
-                Email: result.data.Result[0].Email,
-                Department: result.data.Result[0].Department,
-            })
-        }).catch(err => console.log(err))
-    }, [])
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        axios.put('/get_employee_details/'+id, employee)
-        .then(result => {
-            if(result.data.Status) {
-                navigate('/employee_details')
-            } else {
-                alert(result.data.Error)
-            }
-        }).catch(err => console.log(err))
-    }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUpdatedEmployee(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
 
   return (
     <>
@@ -56,8 +38,9 @@ export function EditModal({ isOpen, handleClose }) {
           id="inputName"
           className="mt-1 py-2 px-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
           placeholder="Enter Name"
-          value={employee.Name}
-          onChange={(e) => setEmployee({ ...employee, Name: e.target.value })}
+          value={updatedEmployee.Name}
+          onChange={handleChange}
+          // onChange={(e) => setEmployee({ ...employee, Name: e.target.value })}
         />
       </div>
       <div className="mb-4">
@@ -68,8 +51,9 @@ export function EditModal({ isOpen, handleClose }) {
           className="mt-1 py-2 px-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
           placeholder="Enter Email"
           autoComplete="off"
-          value={employee.Email}
-          onChange={(e) => setEmployee({ ...employee, Email: e.target.value })}
+          value={updatedEmployee.Email}
+          onChange={handleChange}
+          // onChange={(e) => setEmployee({ ...employee, Email: e.target.value })}
         />
       </div>
       <div className="mb-4">
@@ -80,8 +64,9 @@ export function EditModal({ isOpen, handleClose }) {
           className="mt-1 py-2 px-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
           placeholder="Enter Department"
           autoComplete="off"
-          value={employee.Department}
-          onChange={(e) => setEmployee({ ...employee, Department: e.target.value })}
+          value={updatedEmployee.Department}
+          onChange={handleChange}
+          // onChange={(e) => setEmployee({ ...employee, Department: e.target.value })}
         />
       </div>
       <div className="flex justify-center">

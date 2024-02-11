@@ -1,6 +1,5 @@
 import React from 'react'
-import BarChartJs from './BarChartJs'  
-import PieChartJs from './PieChartJs'
+import BarChartJs from './BarChartJs' 
 import BasicPie from './BasicPie'
 
 const Analytics = () => {

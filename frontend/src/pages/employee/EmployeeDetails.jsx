@@ -12,6 +12,8 @@ const EmployeeDetails = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10); // Number of entries to display per page
   const navigate = useNavigate();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingEmployeeId, setEditingEmployeeId] = useState(null);
+  const [editingEmployee, setEditingEmployee] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,20 +38,46 @@ const EmployeeDetails = () => {
   };
 
   const handleEdit = (id) => {
-    // Implement edit functionality here
-    console.log("Edit button clicked for ID:", id);
-    navigate(`/employee-details/`+id)
+    setEditingEmployeeId(id);
+    const employee = employeeData.find(emp => emp.id === id);
+    setEditingEmployee(employee);
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditModalClose = () => {
+    setIsEditModalOpen(false);
+    setEditingEmployeeId(null);
+    setEditingEmployee(null);
+  };
+
+  const handleEditEmployee = async (updatedEmployeeData) => {
+    try {
+      // Update employee data locally
+      const updatedEmployeeList = employeeData.map(employee => {
+        if (employee.id === editingEmployeeId) {
+          return { ...employee, ...updatedEmployeeData };
+        }
+        return employee;
+      });
+      setEmployeeData(updatedEmployeeList);
+
+      // Send PUT request to update employee data on the backend
+      await axios.put(`/get_employee_details/${editingEmployeeId}`, updatedEmployeeData);
+      
+      handleEditModalClose();
+    } catch (error) {
+      console.error('Error editing employee:', error);
+    }
   };
 
   const handleDelete = (id) => {
-    <EditModal />
+    // <EditModal />
     console.log("handleDelete Clicked");
     setIsEditModalOpen(true);
     // navigate(`/get_employee_details/${id}`)
   };
   const handleClose = () => {
     setIsEditModalOpen(false);
-    // setEmployeeData(null);
   };
 
   const downloadTable = () => {
@@ -89,8 +117,15 @@ const EmployeeDetails = () => {
                     <IconButton onClick={() => handleEdit(employeeId)} color="primary">
                       <EditIcon />
                     </IconButton>
-                    {isEditModalOpen && <EditModal isOpen={isEditModalOpen} handleClose={handleClose}/>}
-
+                    {/* {isEditModalOpen && <EditModal isOpen={isEditModalOpen} employeeData={employeeData[employeeId]} handleClose={handleClose}/>} */}
+                    {isEditModalOpen && editingEmployee && (
+                      <EditModal
+                        isOpen={isEditModalOpen}
+                        employee={editingEmployee}
+                        handleClose={handleEditModalClose}
+                        handleEdit={handleEditEmployee}
+                      />
+                    )}
                     <IconButton onClick={() => handleDelete(employeeId)} color="secondary">
                       <DeleteIcon />
                     </IconButton>

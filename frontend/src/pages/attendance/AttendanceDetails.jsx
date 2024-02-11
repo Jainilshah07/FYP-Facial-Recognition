@@ -85,7 +85,7 @@ const AttendanceDetails = () => {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[10, 25, 50]}
+          rowsPerPageOptions={[3,5,8]}
           component="div"
           count={attendanceData.length}
           rowsPerPage={rowsPerPage}
