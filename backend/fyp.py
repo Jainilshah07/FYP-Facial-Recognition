@@ -10,13 +10,25 @@ app = Flask(__name__)
 def attendance():
     return getAttendance.get_attendance()
 
+@app.route('/get_specific_attendance/<id>', methods=['GET'])
+def specific_attendance(id):
+    return getAttendance.get_specific_attendance(id)
+
 @app.route('/get_attendance/<id>', methods=['DELETE'])
 def del_attendance(id):
     return getAttendance.attendance_delete(id)
 
+@app.route('/download_attendance', methods=['GET'])
+def down_attendance():
+    return getAttendance.download_attendance()
+
 @app.route('/get_employee_details',methods=['GET','PUT'])
 def employee():
     return employeeDetails.get_employee_details()
+
+@app.route('/get_specific_employee/<id>', methods=['GET'])
+def specific_employee(id):
+    return employeeDetails.get_specific_employee(id)
 
 @app.route('/get_employee_details',methods=['DELETE'])
 def del_employee(id):
