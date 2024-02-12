@@ -7,6 +7,8 @@ import AddEmployee from "./pages/employee/AddEmployee";
 import Employee from "./pages/employee/Employee";
 import Attendance from "./pages/attendance/Attendance";
 import EditEmployee from "./pages/employee/EditEmployee";
+import AttendanceBased from "./pages/defaulters/AttendanceBased";
+import AttenBased from "./pages/defaulters/AttenBased";
 
 
 function App() {
@@ -21,6 +23,7 @@ function App() {
           <Route path="/add-employee" element={<AddEmployee />} ></Route>
           <Route path="/employee-details" element={<Employee/>} ></Route>
           <Route path="/employee-details/:id" element={<EditEmployee/>} ></Route>
+          <Route path="/defaulter/attendance" element={<AttenBased/>} ></Route>
         </Routes>
         </div>
       </div>

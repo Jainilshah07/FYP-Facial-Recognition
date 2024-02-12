@@ -34,6 +34,10 @@ def specific_employee(id):
 def del_employee(id):
     return employeeDetails.employee_delete(id)  
 
+@app.route('/download_employee_details', methods=['GET'])
+def download_employee_details():
+    return employeeDetails.download_employee_details()
+
 
 
 if __name__ == '__main__':

@@ -4,7 +4,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
-import { EditModal } from './EditModal';
+import Modal from './Modal';
 
 const EmployeeDetails = () => {
   const [employeeData, setEmployeeData] = useState([]);
@@ -12,21 +12,23 @@ const EmployeeDetails = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10); // Number of entries to display per page
   const navigate = useNavigate();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editingEmployeeId, setEditingEmployeeId] = useState(null);
-  const [editingEmployee, setEditingEmployee] = useState(null);
+  const [editingEmployeeId, setEditingEmployeeId] = useState('');
+  // console.log("editingEmployeeId", editingEmployeeId)
+  // const [editingEmployee, setEditingEmployee] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('/get_employee_details');
-        setEmployeeData(Object.values(response.data));
-      } catch (error) {
-        console.error('Error fetching attendance data:', error);
-      }
-    };
-
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('/get_employee_details');
+      setEmployeeData(response.data);
+      console.log(employeeData);
+    } catch (error) {
+      console.error('Error fetching employee data:', error);
+    }
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -39,31 +41,20 @@ const EmployeeDetails = () => {
 
   const handleEdit = (id) => {
     setEditingEmployeeId(id);
-    const employee = employeeData.find(emp => emp.id === id);
-    setEditingEmployee(employee);
     setIsEditModalOpen(true);
   };
 
   const handleEditModalClose = () => {
     setIsEditModalOpen(false);
-    setEditingEmployeeId(null);
-    setEditingEmployee(null);
+    setEditingEmployeeId('');
   };
 
   const handleEditEmployee = async (updatedEmployeeData) => {
     try {
-      // Update employee data locally
-      const updatedEmployeeList = employeeData.map(employee => {
-        if (employee.id === editingEmployeeId) {
-          return { ...employee, ...updatedEmployeeData };
-        }
-        return employee;
-      });
-      setEmployeeData(updatedEmployeeList);
-
-      // Send PUT request to update employee data on the backend
-      await axios.put(`/get_employee_details/${editingEmployeeId}`, updatedEmployeeData);
-      
+      // console.log(updatedEmployeeData);
+      updatedEmployeeData.id = editingEmployeeId;
+      await axios.put(`/get_employee_details`, updatedEmployeeData);
+      fetchData(); // Refetch data after editing
       handleEditModalClose();
     } catch (error) {
       console.error('Error editing employee:', error);
@@ -81,8 +72,14 @@ const EmployeeDetails = () => {
   };
 
   const downloadTable = () => {
-    // Implement logic to download the table attendance
-    console.log("Downloading table attendance...");
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/download_employee_details');
+        console.log("Download api hit");
+      } catch (error) {
+        console.error('Error fetching attendance data:', error);
+      }
+    };
   };
   const handleAdd = () => {
     navigate('/add-employee');
@@ -108,24 +105,22 @@ const EmployeeDetails = () => {
             <TableBody>
               {Object.keys(employeeData).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((employeeId, index) => (
                 <TableRow key={index}>
-                  <TableCell>{employeeId}</TableCell>
+                  <TableCell>{employeeData[employeeId].id}</TableCell>
                   <TableCell>{employeeData[employeeId].Name}</TableCell>
+                  <TableCell><img className='rounded-full' src={employeeData[employeeId].imgUrl} alt='' height='30px' width='60px' /></TableCell>
                   <TableCell>{employeeData[employeeId].Department}</TableCell>
-                  <TableCell><img src={employeeData[employeeId].imgUrl} alt='' height='30px' width='60px' /></TableCell>
                   <TableCell>{employeeData[employeeId].Email}</TableCell>
                   <TableCell>
-                    <IconButton onClick={() => handleEdit(employeeId)} color="primary">
+                    <IconButton onClick={() => handleEdit(employeeData[employeeId].id)} color="primary">
                       <EditIcon />
                     </IconButton>
-                    {/* {isEditModalOpen && <EditModal isOpen={isEditModalOpen} employeeData={employeeData[employeeId]} handleClose={handleClose}/>} */}
-                    {isEditModalOpen && editingEmployee && (
-                      <EditModal
+                    {isEditModalOpen && < Modal 
                         isOpen={isEditModalOpen}
-                        employee={editingEmployee}
-                        handleClose={handleEditModalClose}
+                        employee={editingEmployeeId}
                         handleEdit={handleEditEmployee}
+                        handleClose={handleEditModalClose}
                       />
-                    )}
+                    }
                     <IconButton onClick={() => handleDelete(employeeId)} color="secondary">
                       <DeleteIcon />
                     </IconButton>
@@ -136,7 +131,7 @@ const EmployeeDetails = () => {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[3, 25, 50]}
+          rowsPerPageOptions={[5, 25, 50]}
           component="div"
           count={employeeData.length}
           rowsPerPage={rowsPerPage}

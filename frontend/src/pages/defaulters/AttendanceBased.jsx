@@ -3,24 +3,30 @@ import axios from 'axios';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination, Button, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const AttendanceDetails = () => {
-  const [attendanceData, setAttendanceData] = useState([]);
+const AttendanceBased = () => {
+  const [employeeData, setEmployeeData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10); // Number of entries to display per page
   const navigate = useNavigate();
+  const[defaulter, setDefaulter] = useState("No");
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await axios.get('/get_attendance');
-        setAttendanceData(Object.values(response.data));
-      } catch (error) {
-        console.error('Error fetching attendance data:', error);
-      }
+        try {
+            const response = await axios.get('/get_employee_details');
+            setEmployeeData(response.data);
+            console.log(employeeData);
+          } catch (error) {
+            console.error('Error fetching employee data:', error);
+          }
     };
 
     fetchData();
   }, []);
+
+  const calculateDefaulter = (num, days) => {
+    return num / days < 0.75 ? "Yes" : "No";
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -29,16 +35,6 @@ const AttendanceDetails = () => {
   const handleChangeRowsPerPage = event => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  };
-
-  const handleEdit = (id) => {
-    // Implement edit functionality here
-    console.log("Edit button clicked for ID:", id);
-  };
-
-  const handleDelete = (id) => {
-    // Implement delete functionality here
-    console.log("Delete button clicked for ID:", id);
   };
 
   const downloadTable = () => {
@@ -51,41 +47,44 @@ const AttendanceDetails = () => {
 
   return (
     <div className="container mx-auto p-2">
-      <h1 className="text-2xl font-bold mb-2">Attendance Details</h1>
-      {/* <button onClick={handleAdd} className='p-2 bo bg-blue-gray-200 border-black'>Add Employee</button> */}
-      <Paper>
+      <h1 className="text-2xl my-4 font-bold">Defaulters Based on Attendance Details</h1>
+        <Paper>
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell>Employee ID</TableCell>
                 <TableCell>Name</TableCell>
-                {/* <TableCell>Image</TableCell> */}
+                <TableCell>Image</TableCell>
                 <TableCell>Department</TableCell>
                 <TableCell>Email</TableCell>
-                <TableCell>Time In</TableCell>
-                <TableCell>Time Out</TableCell>
+                <TableCell>Defaulter</TableCell>
               </TableRow>
             </TableHead>    
             <TableBody>
-              {Object.keys(attendanceData).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((employeeId, index) => (
-                <TableRow key={index}>
-                  <TableCell>{employeeId}</TableCell>
-                  <TableCell>{attendanceData[employeeId].Name}</TableCell>
-                  {/* <TableCell><img src={attendanceData[employeeId].imgUrl} height='30px' width='60px' /></TableCell> */}
-                  <TableCell>{attendanceData[employeeId].Department}</TableCell>
-                  <TableCell>{attendanceData[employeeId].Email}</TableCell>
-                  <TableCell>{attendanceData[employeeId].TimeIn}</TableCell>
-                  <TableCell>{attendanceData[employeeId].TimeOut}</TableCell>
-                </TableRow>
-              ))}
+              {Object.keys(employeeData).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((employeeId, index) => {
+                const employee = employeeData[employeeId];
+    // Calculate defaulter status for the current employee
+    const defaulterStatus = calculateDefaulter(employee.attendance_count, employee.days);
+
+    return (
+      <TableRow key={index}>
+        <TableCell>{employee.id}</TableCell>
+        <TableCell>{employee.Name}</TableCell>
+        <TableCell><img className='rounded-full' src={employee.imgUrl} alt='' height='30px' width='60px' /></TableCell>
+        <TableCell>{employee.Department}</TableCell>
+        <TableCell>{employee.Email}</TableCell>
+        <TableCell>{defaulterStatus}</TableCell>
+      </TableRow>
+    );
+  })}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[3,5,8]}
           component="div"
-          count={attendanceData.length}
+          count={employeeData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -93,8 +92,9 @@ const AttendanceDetails = () => {
         />
         <Button onClick={downloadTable} variant="contained" color="primary">Download Attendance</Button>
       </Paper>
+      
     </div>
   );
 };
 
-export default AttendanceDetails;
+export default AttendanceBased;

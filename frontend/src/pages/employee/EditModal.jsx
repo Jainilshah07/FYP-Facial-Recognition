@@ -10,7 +10,22 @@ import {
 } from "@material-tailwind/react";
  
 export function EditModal({ isOpen, handleClose, handleEdit, employee  }) {
-  const [updatedEmployee, setUpdatedEmployee] = useState({ ...employee });
+  const [updatedEmployee, setUpdatedEmployee] = useState([]);
+  // const [employeeData, setEmployeeData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`get_specific_employee/${employee}`);
+        setUpdatedEmployee(Object.values(response.data));
+        console.log(Object.values(response.data));
+      } catch (error) {
+        console.error('Error fetching attendance data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,6 +33,7 @@ export function EditModal({ isOpen, handleClose, handleEdit, employee  }) {
   };
 
   const handleChange = (e) => {
+    console.log(e.target.value)
     const { name, value } = e.target;
     setUpdatedEmployee(prevState => ({
       ...prevState,
@@ -38,7 +54,7 @@ export function EditModal({ isOpen, handleClose, handleEdit, employee  }) {
           id="inputName"
           className="mt-1 py-2 px-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
           placeholder="Enter Name"
-          value={updatedEmployee.Name}
+          value={updatedEmployee[0]?.Name}
           onChange={handleChange}
           // onChange={(e) => setEmployee({ ...employee, Name: e.target.value })}
         />
