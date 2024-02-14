@@ -10,6 +10,7 @@ const AddEmployee = () => {
         Name: "",
         Email: "",
         Department: "",
+        id:""
     });
     const [img,setImg] = useState('');
     const navigate = useNavigate();
@@ -33,6 +34,7 @@ const AddEmployee = () => {
                 Name:employee.Name, 
                 Email:employee.Email,
                 Department:employee.Department,
+                id:employee.id,
                 imgUrl:img
               });
             // await addDoc(valRef,{Name:employee.Name, Email:employee.Email, Department:employee.Department,imgUrl:img}, docName)
