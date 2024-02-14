@@ -41,9 +41,6 @@ const AttendanceBased = () => {
     // Implement logic to download the table attendance
     console.log("Downloading table attendance...");
   };
-  const handleAdd = () => {
-    navigate('/add');
-  }
 
   return (
     <div className="container mx-auto p-2">

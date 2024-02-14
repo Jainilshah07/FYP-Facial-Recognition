@@ -55,11 +55,25 @@ const AddEmployee = () => {
                       <h3 className="text-center text-3xl font-bold my-4">Add Employee</h3>
                         <div className='col-span-2 my-3'>
             <label htmlFor="inputName" className="col-span-1 text-left text-lg font-semibold mx-2 my-2">
+              ID:
+            </label>
+            <input
+              type="text"
+              className="col-span-1 form-input px-2  rounded"
+              id="inputId"
+              placeholder="Enter ID"
+              onChange={(e) =>
+                setEmployee({ ...employee, id: e.target.value })
+              }
+            />
+                        </div>
+                        <div className='col-span-2 my-3'>
+            <label htmlFor="inputName" className="col-span-1 text-left text-lg font-semibold mx-2 my-2">
               Name:
             </label>
             <input
               type="text"
-              className="col-span-1 form-input rounded"
+              className="col-span-1 form-input px-2  rounded"
               id="inputName"
               placeholder="Enter Name"
               onChange={(e) =>
@@ -73,7 +87,7 @@ const AddEmployee = () => {
             </label>
             <input
               type="email"
-              className="form-input rounded"
+              className="form-input px-2  rounded"
               id="inputEmail4"
               placeholder="Enter Email"
               onChange={(e) =>
@@ -87,7 +101,7 @@ const AddEmployee = () => {
             </label>
             <input
               type="text"
-              className="form-input rounded"
+              className="form-input px-2  rounded"
               id="Department"
               placeholder="Enter Department"
               onChange={(e) =>
@@ -101,7 +115,7 @@ const AddEmployee = () => {
             </label>
             <input type="file" onChange={(e) => handleUpload(e)} />
                         </div>
-                        <div className='col-span-2 my-3'>
+                        <div className='col-span-2 my-4'>
                         <button onClick={handleClick} className="text-white  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Employee</button>
                         </div>
                   </div>

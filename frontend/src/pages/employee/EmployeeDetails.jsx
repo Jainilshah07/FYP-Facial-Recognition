@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination, Button, IconButton } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination, Button, IconButton, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
@@ -13,8 +13,8 @@ const EmployeeDetails = () => {
   const navigate = useNavigate();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingEmployeeId, setEditingEmployeeId] = useState('');
-  // console.log("editingEmployeeId", editingEmployeeId)
-  // const [editingEmployee, setEditingEmployee] = useState(null);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [deleteEmployeeId, setDeleteEmployeeId] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -61,14 +61,30 @@ const EmployeeDetails = () => {
     }
   };
 
-  const handleDelete = (id) => {
-    // <EditModal />
-    console.log("handleDelete Clicked");
-    setIsEditModalOpen(true);
-    // navigate(`/get_employee_details/${id}`)
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`/get_employee_details/${id}`);
+      console.log("Delete");
+      fetchData(); // Refetch data after editing
+    } catch (error) {
+      console.error('Error editing employee:', error);
+    }
   };
-  const handleClose = () => {
-    setIsEditModalOpen(false);
+
+  const handleDeleteConfirmation = (id) => {
+    setDeleteEmployeeId(id);
+    setOpenDeleteDialog(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
+  };
+
+  const handleConfirmDelete = () => {
+    if (deleteEmployeeId) {
+      handleDelete(deleteEmployeeId);
+      setOpenDeleteDialog(false);
+    }
   };
 
   const downloadTable = () => {
@@ -88,7 +104,7 @@ const EmployeeDetails = () => {
   return (
     <div className="container mx-auto p-2">
       <h1 className="text-2xl font-bold mb-2">Employee Details</h1>
-      <button onClick={handleAdd} className='p-2 bo bg-blue-gray-200 border-black'>Add Employee</button>
+      <button onClick={handleAdd} className='p-2 my-2 bg-blue-gray-200 border-black'>Add Employee</button>
       <Paper>
         <TableContainer>
           <Table>
@@ -121,9 +137,12 @@ const EmployeeDetails = () => {
                         handleClose={handleEditModalClose}
                       />
                     }
-                    <IconButton onClick={() => handleDelete(employeeId)} color="secondary">
+                    {/* <IconButton onClick={() => handleDelete(employeeData[employeeId].id)} color="secondary">
                       <DeleteIcon />
-                    </IconButton>
+                    </IconButton> */}
+                    <IconButton onClick={() => handleDeleteConfirmation(employeeData[employeeId].id)} color="secondary">
+                        <DeleteIcon />
+                      </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
@@ -131,7 +150,7 @@ const EmployeeDetails = () => {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 25, 50]}
+          rowsPerPageOptions={[3, 5, 10]}
           component="div"
           count={employeeData.length}
           rowsPerPage={rowsPerPage}
@@ -141,6 +160,16 @@ const EmployeeDetails = () => {
         />
         <Button onClick={downloadTable} variant="contained" color="primary">Download Details</Button>
       </Paper>
+      <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
+        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogContent>
+          <p>Are you sure you want to delete this employee?</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDeleteDialog} color="primary">Cancel</Button>
+          <Button onClick={handleConfirmDelete} color="secondary">Delete</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
