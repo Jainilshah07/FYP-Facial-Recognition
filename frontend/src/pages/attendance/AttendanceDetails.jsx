@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TablePagination, Button, IconButton } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 
 const AttendanceDetails = () => {
@@ -62,7 +60,7 @@ const AttendanceDetails = () => {
               <TableRow>
                 <TableCell>Employee ID</TableCell>
                 <TableCell>Name</TableCell>
-                <TableCell>Image</TableCell>
+                {/* <TableCell>Image</TableCell> */}
                 <TableCell>Department</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Time In</TableCell>
@@ -74,7 +72,7 @@ const AttendanceDetails = () => {
                 <TableRow key={index}>
                   <TableCell>{employeeId}</TableCell>
                   <TableCell>{attendanceData[employeeId].Name}</TableCell>
-                  <TableCell><img src={attendanceData[employeeId].imgUrl} height='30px' width='60px' /></TableCell>
+                  {/* <TableCell><img src={attendanceData[employeeId].imgUrl} height='30px' width='60px' /></TableCell> */}
                   <TableCell>{attendanceData[employeeId].Department}</TableCell>
                   <TableCell>{attendanceData[employeeId].Email}</TableCell>
                   <TableCell>{attendanceData[employeeId].TimeIn}</TableCell>

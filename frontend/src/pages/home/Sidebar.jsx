@@ -100,7 +100,7 @@ const Sidebar = () => {
                         </ListItem>
                         <AccordionBody className="py-1">
                             <List className="p-0">
-                                <Link to={'/attendance'}> <ListItem>
+                                <Link to={'/defaulter/attendance'}> <ListItem>
                                     <ListItemPrefix>
                                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                                     </ListItemPrefix>

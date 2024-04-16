@@ -30,9 +30,13 @@ def employee():
 def specific_employee(id):
     return employeeDetails.get_specific_employee(id)
 
-@app.route('/get_employee_details',methods=['DELETE'])
+@app.route('/get_employee_details/<id>',methods=['DELETE'])
 def del_employee(id):
     return employeeDetails.employee_delete(id)  
+
+@app.route('/download_employee_details', methods=['GET'])
+def download_employee_details():
+    return employeeDetails.download_employee_details()
 
 @app.route('/process_vid',methods=['POST'])
 def index():
