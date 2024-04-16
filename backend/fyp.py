@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from firebase_admin import credentials, firestore, initialize_app
-import getAttendance,employeeDetails
+import getAttendance,employeeDetails,attendance
 
 # Initialize Flask App
 app = Flask(__name__)
@@ -34,7 +34,12 @@ def specific_employee(id):
 def del_employee(id):
     return employeeDetails.employee_delete(id)  
 
-
+@app.route('/process_vid',methods=['POST'])
+def index():
+    if request.method == 'POST':
+        # Get the incoming video file
+        video = request.files['video']
+        attendance.attendance_model(video)
 
 if __name__ == '__main__':
     app.run(debug=True)
