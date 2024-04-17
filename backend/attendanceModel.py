@@ -7,11 +7,10 @@ from firebase_admin import storage, credentials, firestore, initialize_app
 import csv
 import pandas as pd
 
-
 def attendance_model(video_id):
     if request.method == 'GET':
         try:
-        # Initialize Flask App
+            # Initialize Flask App
             app = Flask(__name__)
 
             # Initialize Firestore DB
@@ -19,8 +18,32 @@ def attendance_model(video_id):
             # initialize_app(cred)
             bucket = storage.bucket('gs://fyp-79526.appspot.com')
             blob = bucket.get_blob('Imgs.mp4')
-            video_data = blob.download_as_string()
-            return jsonify({'status': 'success', 'data': blob})
+
+            if blob is None or not blob.exists():
+                return jsonify({'error': 'Video file not found'}), 404
+
+            # Read the video file using OpenCV with a URL
+            video_url = 'https://storage.googleapis.com/fyp-79526.appspot.com/Imgs.mp4'
+            video = cv2.VideoCapture(video_url)
+
+            #... rest of your code...
+
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
+
+# def attendance_model(video_id):
+#     if request.method == 'GET':
+#         try:
+#         # Initialize Flask App
+#             app = Flask(__name__)
+
+#             # Initialize Firestore DB
+#             # cred = credentials.Certificate('key.json')
+#             # initialize_app(cred)
+#             bucket = storage.bucket('gs://fyp-79526.appspot.com')
+#             blob = bucket.get_blob('Imgs.mp4')
+#             video_data = blob.download_as_string()
+#             return jsonify({'status': 'success', 'data': blob})
             # Convert the video data to a numpy array
         #     video = np.frombuffer(video_data, np.uint8)
 
