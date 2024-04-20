@@ -9,6 +9,8 @@ import Attendance from "./pages/attendance/Attendance";
 import EditEmployee from "./pages/employee/EditEmployee";
 import AttendanceBased from "./pages/defaulters/AttendanceBased";
 import AttenBased from "./pages/defaulters/AttenBased";
+import VideoProcessing from "./pages/video/VideoProcessing";
+import VideoPage from "./pages/video/VideoPage";
 
 
 function App() {
@@ -24,6 +26,7 @@ function App() {
           <Route path="/employee-details" element={<Employee/>} ></Route>
           <Route path="/employee-details/:id" element={<EditEmployee/>} ></Route>
           <Route path="/defaulter/attendance" element={<AttenBased/>} ></Route>
+          <Route path="/videos" element={<VideoPage />} ></Route>
         </Routes>
         </div>
       </div>
