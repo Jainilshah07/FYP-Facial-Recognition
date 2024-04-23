@@ -9,6 +9,15 @@ import pandas as pd
 import pyrebase
 import requests
 
+def check_consecutive_names(names):
+    i = 0
+    while i < len(names) - 2:
+        if names[i] == names[i+1] == names[i+2]:
+            del names[i+2]
+            del names[i+1]
+        else:
+            i += 1
+    return names
 
 def attendance_model(video_id):
     if request.method == 'GET':
@@ -16,12 +25,13 @@ def attendance_model(video_id):
         # Initialize Flask App
             app = Flask(__name__)
             # Download the video from the URL
-            response = requests.get('https://firebasestorage.googleapis.com/v0/b/fyp-79526.appspot.com/o/videos%2FPart2.mp4?alt=media&token=ddbdd827-c134-4241-a834-8eee0fe818d2')
+            response = requests.get('https://firebasestorage.googleapis.com/v0/b/fyp-79526.appspot.com/o/Videos%2FVideo3.mp4?alt=media&token=2c2f4341-269f-4ff7-8f96-ddc378dddd74')
 
             # Save the file to a temporary file
             with open('temp-vid.mp4', 'wb') as f:
                 f.write(response.content)
             
+            interval = 5
             path = 'internFaceData'
             images = []
             classNames = []
@@ -44,12 +54,14 @@ def attendance_model(video_id):
             print('Encoding Done')
 
             cap = cv2.VideoCapture('temp-vid.mp4')
-            
+            names = []
             # fourcc = cv2.VideoWriter_fourcc(*'XVID')
             # out = cv2.VideoWriter('output.avi', fourcc, 20.0, (640, 480))
 
             while True:
                 success, img = cap.read()
+                if not success:
+                    break
                 imgS = cv2.resize(img,(0,0),None,0.25,0.25)
                 imgS = cv2.cvtColor(imgS,cv2.COLOR_BGR2RGB)
                 
@@ -65,20 +77,25 @@ def attendance_model(video_id):
 
                     if faceDis[matchIndex]<0.50: 
                         name = classNames[matchIndex].upper()
-                        print(name)
+                        names.append(name)
+                        print(names)
                     else:
                         name = "Unknown"
-                    y1,x2,y2,x1 = faceLoc
-                    y1,x2,y2,x1 =  y1*4,x2*4,y2*4,x1*4
-                    cv2.rectangle(img,(x1,y1),(x2,y2),(0,255,0),2)
-                    cv2.rectangle(img,(x1,y2-35),(x2,y2),(0,255,0),cv2.FILLED)
-                    cv2.putText(img,name,(x1+6,y2-6),cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
+                    # y1,x2,y2,x1 = faceLoc
+                    # y1,x2,y2,x1 =  y1*4,x2*4,y2*4,x1*4
+                    # cv2.rectangle(img,(x1,y1),(x2,y2),(0,255,0),2)
+                    # cv2.rectangle(img,(x1,y2-35),(x2,y2),(0,255,0),cv2.FILLED)
+                    # cv2.putText(img,name,(x1+6,y2-6),cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
+                names = check_consecutive_names(names)
                 
+                for i in range(interval):
+                    cap.grab() 
                 
-                _, buffer = cv2.imencode('.jpg',img)
-                with open('processed-frames.mp4', 'wb') as f:
-                    f.write(buffer.tobytes())
-                return send_file('processed-frames.mp4', mimetype='video/mp4')
+            return jsonify({"People":names})
+                # _, buffer = cv2.imencode('.jpg',img)
+                # with open('processed-frames.mp4', 'wb') as f:
+                #     f.write(buffer.tobytes())
+                # return send_file('processed-frames.mp4', mimetype='video/mp4')
                 # return Response(buffer.tobytes(), mimetype='video/mp4')
                 # cv2.waitKey(1) 
                 
