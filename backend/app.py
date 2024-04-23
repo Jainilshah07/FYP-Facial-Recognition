@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from firebase_admin import credentials, firestore, initialize_app
-import attendanceModel,getAttendance,employeeDetails
+import attendanceModel,getAttendance,employeeDetails,videoDetails
 
 # Initialize Flask App
 app = Flask(__name__)
@@ -37,6 +37,10 @@ def del_employee(id):
 @app.route('/download_employee_details', methods=['GET'])
 def download_employee_details():
     return employeeDetails.download_employee_details()
+
+@app.route('/get_video/<id>', methods=['GET'])
+def specific_video(id):
+    return videoDetails.get_video(id)
 
 @app.route('/process_vid/<video_id>',methods=['GET'])
 def attendance_run(video_id):

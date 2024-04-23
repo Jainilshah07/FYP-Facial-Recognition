@@ -11,9 +11,8 @@ import requests
 
 def check_consecutive_names(names):
     i = 0
-    while i < len(names) - 2:
-        if names[i] == names[i+1] == names[i+2]:
-            del names[i+2]
+    while i < len(names) - 1:
+        if names[i] == names[i+1]:
             del names[i+1]
         else:
             i += 1
@@ -24,8 +23,11 @@ def attendance_model(video_id):
         try:
         # Initialize Flask App
             app = Flask(__name__)
+            res = requests.get(f'http://127.0.0.1:5000/get_video/{video_id}')
+            if res.status_code == 200:
+                res = res.json()
             # Download the video from the URL
-            response = requests.get('https://firebasestorage.googleapis.com/v0/b/fyp-79526.appspot.com/o/Videos%2FVideo3.mp4?alt=media&token=2c2f4341-269f-4ff7-8f96-ddc378dddd74')
+            response = requests.get(res[0])
 
             # Save the file to a temporary file
             with open('temp-vid.mp4', 'wb') as f:
