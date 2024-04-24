@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { imgDb, txtDb } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { listAll, getDownloadURL, ref, uploadBytes } from 'firebase/storage'; // Updated Firebase Storage imports
+import axios from 'axios';
 
 const VideoProcessing = () => {
     const [videos, setVideos] = useState([]);
     const [videoDetails, setVideoDetails] = useState({
         Name: ""
     });
+    const[employees, setEmployees] = useState([]);
     const [newVideo, setNewVideo] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
 
@@ -55,7 +57,18 @@ const VideoProcessing = () => {
             alert('Error uploading video. Please try again.');
         });
     }
-    
+
+    const handleProcess = async (name) => {
+        try {
+            const response = await axios.get(`/process_vid/${name}`);
+            setEmployees(response.data);
+            console.log(employees);
+        } catch (error) {
+            console.error('Error fetching employee data:', error);
+        }
+
+    }
+
 
     return (
         <div>
@@ -78,7 +91,7 @@ const VideoProcessing = () => {
                 <label htmlFor="inputFile" className="text-lg font-semibold mx-2 my-2">
                     Select Video:
                 </label>
-                <input type="file" onChange={handleFileChange}  />
+                <input type="file" onChange={handleFileChange} />
                 <button onClick={handleClick} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Upload Video</button>
             </div>
             <div>
@@ -92,6 +105,8 @@ const VideoProcessing = () => {
                                         <source src={videoUrl} type="video/mp4" />
                                         Your browser does not support the video tag.
                                     </video>
+                                </div>
+                                <div className='mt-2'><button onClick={handleProcess(videos.Name)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Process Video</button>
                                 </div>
                             </div>
                         ))}
