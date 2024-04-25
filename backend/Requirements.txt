@@ -1,6 +1,4 @@
-Django Setup
-Sql connection
 Pandas
-Firebase admin
+firebase_admin
 Flask
 Gunicorn
