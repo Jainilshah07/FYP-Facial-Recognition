@@ -3,3 +3,4 @@ Sql connection
 Pandas
 Firebase admin
 Flask
+Gunicorn
