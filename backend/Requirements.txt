@@ -1,4 +1,8 @@
 pandas
+numpy
+os
+csv
+requests
 firebase_admin
 opencv-python
 face_recognition
