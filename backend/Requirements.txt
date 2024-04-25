@@ -1,4 +1,6 @@
-Pandas
+pandas
 firebase_admin
+opencv-python
+face_recognition
 Flask
 Gunicorn
