@@ -4,7 +4,6 @@ import face_recognition
 import os
 from flask import Flask, request, jsonify, Response, send_file
 from firebase_admin import storage, credentials, firestore, initialize_app
-import csv
 import pandas as pd
 import requests
 
