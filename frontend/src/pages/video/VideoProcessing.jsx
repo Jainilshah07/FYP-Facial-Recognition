@@ -19,11 +19,13 @@ const VideoProcessing = () => {
 
     const fetchVideosFromDatabase = async () => {
         try {
-            const videoRefs = await listAll(ref(imgDb, 'Videos')); // Update reference to use imgDb
-            const videoUrls = await Promise.all(videoRefs.items.map(async (videoRef) => {
-                return getDownloadURL(videoRef);
+            const videoRefs = await listAll(ref(imgDb, 'Videos'));
+            const videoData = await Promise.all(videoRefs.items.map(async (videoRef) => {
+                const videoUrl = await getDownloadURL(videoRef);
+                const videoName = videoRef.name;
+                return { vidUrl: videoUrl, Name: videoName };
             }));
-            setVideos(videoUrls);
+            setVideos(videoData);
         } catch (error) {
             console.error('Error fetching videos:', error);
         }
@@ -62,11 +64,10 @@ const VideoProcessing = () => {
         try {
             const response = await axios.get(`/process_vid/${name}`);
             setEmployees(response.data);
-            console.log(employees);
+            console.log(response.data); // Log the response data
         } catch (error) {
             console.error('Error fetching employee data:', error);
         }
-
     }
 
 
@@ -98,18 +99,21 @@ const VideoProcessing = () => {
                 <div>
                     <h2 className="text-2xl font-bold mb-4 text-center">Uploaded Videos</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                        {videos.map((videoUrl, index) => (
-                            <div className="mx-auto" key={index}>
-                                <div className="relative w-[360px] h-48">
-                                    <video controls className="w-full h-full object-cover rounded-lg shadow-md">
-                                        <source src={videoUrl} type="video/mp4" />
-                                        Your browser does not support the video tag.
-                                    </video>
+                        {videos.map((post, index) => {
+                            const { vidUrl, Name} = post;
+                            return (
+                                <div className="mx-auto" key={index}>
+                                    <div className="relative w-[360px] h-48">
+                                        <video controls className="w-full h-full object-cover rounded-lg shadow-md">
+                                            <source src={vidUrl} type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                    <div className='mt-2'><button onClick={() => handleProcess(`Vid_${Name}`)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Process Video</button>
+                                    </div>
                                 </div>
-                                <div className='mt-2'><button onClick={handleProcess(videos.Name)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Process Video</button>
-                                </div>
-                            </div>
-                        ))}
+                            )
+                        } )}
                     </div>
                 </div>
             </div>
