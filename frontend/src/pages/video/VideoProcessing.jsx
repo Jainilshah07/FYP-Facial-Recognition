@@ -47,7 +47,7 @@ const VideoProcessing = () => {
                 setNewVideo(val);
                 const docName = `Vid_${videoDetails.Name.replace(/\s+/g, '_')}`;
                 setDoc(doc(txtDb, "Videos", docName), {
-                    Name: videoDetails.Name,
+                    Name: `Vid_${videoDetails.Name.replace(/\s+/g, '_')}`,
                     vidUrl: val
                 });
                 alert("Video added successfully");
@@ -65,6 +65,12 @@ const VideoProcessing = () => {
             const response = await axios.get(`/process_vid/${name}`);
             setEmployees(response.data);
             console.log(response.data); // Log the response data
+            if (response.data.People && Array.isArray(response.data.People)) {
+                const names = response.data.People.join(", ");
+                alert(`Names: ${names}`);
+            } else {
+                alert("No names found in the response");
+            }
         } catch (error) {
             console.error('Error fetching employee data:', error);
         }
