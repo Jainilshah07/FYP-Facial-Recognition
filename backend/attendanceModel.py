@@ -6,6 +6,7 @@ from flask import Flask, request, jsonify, Response, send_file
 from firebase_admin import storage, credentials, firestore, initialize_app
 import pandas as pd
 import requests
+from datetime import datetime
 
 def check_consecutive_names(names):
     i = 0
@@ -90,6 +91,28 @@ def attendance_model(video_id):
                 
                 for i in range(interval):
                     cap.grab() 
+                    
+            '''Example for post request on postman
+            #? Hit on http://127.0.0.1/get_attendance
+            The raw json format:
+            #* {"id": "EMP004",
+            #* "Department": "IT",
+            #* "Email": "jay@gmail.com",
+            #* "Name": "JJ",
+            #* "TimeIn": "Fri, 15 Dec 2023 06:33:23 GMT",
+            #* "TimeOut": "Fri, 15 Dec 2023 18:30:00 GMT"}
+            '''
+            for i in range(0,len(names)):
+                print(i)
+                print(names[i])
+                format_data = "%d/%m/%y %H:%M:%S.%f"
+                now = datetime.now()
+                data = {
+                    "id": names[i],
+                    "Time In": now.strftime(r'%Y-%m-%d %H:%M:%S'),
+                    "In_attendance": True
+                }
+                requests.post(f'http://127.0.0.1:5000/get_attendance',json=data)
                 
             return jsonify({"People":names})
                 # _, buffer = cv2.imencode('.jpg',img)

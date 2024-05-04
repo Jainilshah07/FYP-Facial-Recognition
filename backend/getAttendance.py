@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from firebase_admin import credentials, firestore, initialize_app
 import csv
 import pandas as pd
+from datetime import datetime
 
 # Initialize Flask App
 app = Flask(__name__)
@@ -32,6 +33,8 @@ def get_attendance():
 
                 # Add the data to the result dictionary
                 result_dict[employee_id] = data
+
+            print(str(datetime.now()))
                 
             return jsonify(result_dict), 200
 
