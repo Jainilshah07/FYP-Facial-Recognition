@@ -67,7 +67,7 @@ const VideoProcessing = () => {
             console.log(response.data); // Log the response data
             if (response.data.People && Array.isArray(response.data.People)) {
                 const names = response.data.People.join(", ");
-                alert(`Names: ${names}`);
+                alert(`Marking Attendance for Employees: ${names}`);
             } else {
                 alert("No names found in the response");
             }
