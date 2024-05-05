@@ -33,31 +33,17 @@ def attendance_model(video_id):
                 f.write(response.content)
             
             interval = 5
-            path = 'internFaceData'
-            images = []
             classNames = []
-            myList = os.listdir(path)
-            print(myList)
-            for cl in  myList:
-                curImg = cv2.imread(f'{path}/{cl}')
-                images.append(curImg)
-                classNames.append(os.path.splitext(cl)[0])
-
-            def findEncodings(images):
-                encodeList =  []
-                for img in images:
-                    img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-                    encode = face_recognition.face_encodings(img)[0]
-                    encodeList.append(encode)
-                return encodeList
-
-            encodeListKnown = findEncodings(images)
+            res = requests.get('http://127.0.0.1:5000/encode/abc')
+            # print(res.json())
+            ids, encodings = zip(*[(item['id'], item['encodings']) for item in res.json()])
+            encodeListKnown = list(encodings)
+            classNames = list(ids)
+            
             print('Encoding Done')
 
             cap = cv2.VideoCapture('temp-vid.mp4')
             names = []
-            # fourcc = cv2.VideoWriter_fourcc(*'XVID')
-            # out = cv2.VideoWriter('output.avi', fourcc, 20.0, (640, 480))
 
             while True:
                 success, img = cap.read()
@@ -77,7 +63,7 @@ def attendance_model(video_id):
                     matchIndex = np.argmin(faceDis)
 
                     if faceDis[matchIndex]<0.50: 
-                        name = classNames[matchIndex].upper()
+                        name = classNames[matchIndex]
                         names.append(name)
                         print(names)
                     else:
@@ -103,27 +89,14 @@ def attendance_model(video_id):
             #* "TimeOut": "Fri, 15 Dec 2023 18:30:00 GMT"}
             '''
             for i in range(0,len(names)):
-                print(i)
-                print(names[i])
-                format_data = "%d/%m/%y %H:%M:%S.%f"
                 now = datetime.now()
                 data = {
-                    "id": names[i],
-                    "Time In": now.strftime(r'%Y-%m-%d %H:%M:%S'),
-                    "In_attendance": True
-                }
-                requests.post(f'http://127.0.0.1:5000/get_attendance',json=data)
-                
+                        "id": f'{names[i]} {now.date()}',
+                        "Time In": now.strftime(r'%H:%M:%S'),
+                        "In_attendance": True
+                        }
+                requests.post(f'http://127.0.0.1:5000/get_attendance',json=data) 
             return jsonify({"People":names})
-                # _, buffer = cv2.imencode('.jpg',img)
-                # with open('processed-frames.mp4', 'wb') as f:
-                #     f.write(buffer.tobytes())
-                # return send_file('processed-frames.mp4', mimetype='video/mp4')
-                # return Response(buffer.tobytes(), mimetype='video/mp4')
-                # cv2.waitKey(1) 
-                
-                
-                
         except Exception as e:
             return jsonify({'error': str(e)}), 500
                 

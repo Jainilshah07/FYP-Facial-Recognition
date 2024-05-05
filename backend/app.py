@@ -1,9 +1,14 @@
 from flask import Flask, request, jsonify
 from firebase_admin import credentials, firestore, initialize_app
-import attendanceModel,getAttendance,employeeDetails,videoDetails
+import attendanceModel,getAttendance,employeeDetails,videoDetails,faceEncoding,testRoute
 
 # Initialize Flask App
 app = Flask(__name__)
+
+# Test route
+@app.route('/test', methods=['GET','POST','PUT'])
+def test():
+    return testRoute.test()
 
 # Endpoint to get all elements in the attendance collection
 @app.route('/get_attendance', methods=['GET','POST','PUT'])
@@ -45,6 +50,10 @@ def specific_video(id):
 @app.route('/process_vid/<video_id>',methods=['GET'])
 def attendance_run(video_id):
     return attendanceModel.attendance_model(video_id)
+
+@app.route('/encode/<path>',methods=['POST','GET'])
+def enocde_face(path):
+    return faceEncoding.findEncodings(path)
 
 if __name__ == '__main__':
     app.run(debug=True)
