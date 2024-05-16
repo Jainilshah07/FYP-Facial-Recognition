@@ -91,8 +91,9 @@ def attendance_model(video_id):
             for i in range(0,len(names)):
                 now = datetime.now()
                 data = {
-                        "id": f'{names[i]} {now.date()}',
-                        "Time In": now.strftime(r'%H:%M:%S'),
+                        "id": f'{names[i]}',
+                        "date": f'{now.date()}',
+                        "Time_In": now.strftime(r'%H:%M:%S'),
                         "In_attendance": True
                         }
                 requests.post(f'http://127.0.0.1:5000/get_attendance',json=data) 
