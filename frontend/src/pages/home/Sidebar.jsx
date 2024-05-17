@@ -1,165 +1,74 @@
-import React from "react";
-import { Link } from 'react-router-dom'
-import {
-    Card,
-    Typography,
-    List,
-    ListItem,
-    ListItemPrefix,
-    ListItemSuffix,
-    Chip,
-    Accordion,
-    AccordionHeader,
-    AccordionBody,
-} from "@material-tailwind/react";
-import {
-    PresentationChartBarIcon,
-    ShoppingBagIcon,
-    UserCircleIcon,
-    Cog6ToothIcon,
-    InboxIcon,
-    PowerIcon,
-} from "@heroicons/react/24/solid";
-import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import logout from '../../assets/power-off.png'
+import adduser from '../../assets/power-off.png'
+import employees from '../../assets/business-people.png'
+import defaulter from '../../assets/man.png'
+import log from '../../assets/log.png'
+import attendance from '../../assets/attendance.png'
+import dashboard from '../../assets/dashboard.png'
+import video from '../../assets/video-processing.png'
 
 const Sidebar = () => {
-    const [open, setOpen] = React.useState(0);
-
-    const handleOpen = (value) => {
-        setOpen(open === value ? 0 : value);
-    };
     return (
-        <></>
-        // <div>
-        //     <div className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-        //         <div className="mb-2 p-4">
-        //             <Link to={'/'}> <Typography variant="h5" color="blue-gray">
-        //                 Spider Cloud
-        //             </Typography></Link>
-        //         </div>
-        //         <List>
-        //             <Accordion
-        //                 open={open === 1}
-        //                 icon={
-        //                     <ChevronDownIcon
-        //                         strokeWidth={2.5}
-        //                         className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`}
-        //                     />
-        //                 }
-        //             >
-        //                 <ListItem className="p-0" selected={open === 1}>
-        //                     <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 p-3">
-        //                         <ListItemPrefix>
-        //                             <PresentationChartBarIcon className="h-5 w-5" />
-        //                         </ListItemPrefix>
-        //                         <Typography color="blue-gray" className="mr-auto font-normal">
-        //                             Dashboard
-        //                         </Typography>
-        //                     </AccordionHeader>
-        //                 </ListItem>
-        //                 <AccordionBody className="py-1">
-        //                     <List className="p-0">
-        //                         <ListItem>
-        //                             <ListItemPrefix>
-        //                                 <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-        //                             </ListItemPrefix>
-        //                             Analytics
-        //                         </ListItem>
-        //                         <ListItem>
-        //                             <ListItemPrefix>
-        //                                 <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-        //                             </ListItemPrefix>
-        //                             Reporting
-        //                         </ListItem>
-        //                         <ListItem>
-        //                             <ListItemPrefix>
-        //                                 <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-        //                             </ListItemPrefix>
-        //                             Projects
-        //                         </ListItem>
-        //                     </List>
-        //                 </AccordionBody>
-        //             </Accordion>
-        //             <Accordion
-        //                 open={open === 2}
-        //                 icon={
-        //                     <ChevronDownIcon
-        //                         strokeWidth={2.5}
-        //                         className={`mx-auto h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""}`}
-        //                     />
-        //                 }
-        //             >
-        //                 <ListItem className="p-0" selected={open === 2}>
-        //                     <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3">
-        //                         <ListItemPrefix>
-        //                             <ShoppingBagIcon className="h-5 w-5" />
-        //                         </ListItemPrefix>
-        //                         <Typography color="blue-gray" className="mr-auto font-normal">
-        //                             Defaulters
-        //                         </Typography>
-        //                     </AccordionHeader>
-        //                 </ListItem>
-        //                 <AccordionBody className="py-1">
-        //                     <List className="p-0">
-        //                         <Link to={'/defaulter/attendance'}> <ListItem>
-        //                             <ListItemPrefix>
-        //                                 <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-        //                             </ListItemPrefix>
-        //                             Based On Attendance
-        //                         </ListItem> </Link>
-        //                         <ListItem>
-        //                             <ListItemPrefix>
-        //                                 <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-        //                             </ListItemPrefix>
-        //                             Based On Zones
-        //                         </ListItem>
-        //                     </List>
-        //                 </AccordionBody>
-        //             </Accordion>
-        //             <Link to={'/attendance'}><ListItem>
-        //                 <ListItemPrefix>
-        //                     <InboxIcon className="h-5 w-5" />
-        //                 </ListItemPrefix>
-        //                 Attendance
-        //             </ListItem></Link> 
-        //             <Link to={'/employee-details'}><ListItem>
-        //                 <ListItemPrefix>
-        //                     <InboxIcon className="h-5 w-5" />
-        //                 </ListItemPrefix>
-        //                 Employee Details
-        //             </ListItem></Link> 
-        //             <ListItem>
-        //                 <ListItemPrefix>
-        //                     <InboxIcon className="h-5 w-5" />
-        //                 </ListItemPrefix>
-        //                 Activity Log
-        //                 <ListItemSuffix>
-        //                     <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
-        //                 </ListItemSuffix>
-        //             </ListItem>
-        //             <ListItem>
-        //                 <ListItemPrefix>
-        //                     <UserCircleIcon className="h-5 w-5" />
-        //                 </ListItemPrefix>
-        //                 Profile
-        //             </ListItem>
-        //             <p className="mx-auto text-xl font-semibold mt-10"> Secondary </p>
-        //             <ListItem className="mt-4">
-        //                 <ListItemPrefix>
-        //                     <Cog6ToothIcon className="h-5 w-5" />
-        //                 </ListItemPrefix>
-        //                 Settings
-        //             </ListItem>
-        //             <Link to='/login'> <ListItem>
-        //                 <ListItemPrefix>
-        //                     <PowerIcon className="h-5 w-5" />
-        //                 </ListItemPrefix>
-        //                 Log Out
-        //             </ListItem></Link>
-        //         </List>
-        //     </div>
-        // </div>
-    )
-}
+        <aside id="default-sidebar" className="fixed top-0 left-0 z-40 w-[303px] h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+            <div className="h-full px-3 py-4 overflow-y-auto bg-white dark:bg-gray-800">
+                <ul className="space-y-2 font-medium">
+                    <li>
+                        <div className='mx-auto text-2xl font-bold'>Spider Cloud</div>
+                    </li>
+                    <li>
+                        <Link to="/" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <img src={dashboard} alt="logout" className='w-9 h-9' />
+                            <span className="flex-1 ms-3 whitespace-nowrap">Dashboard</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/add-employee" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <img src={adduser} alt="logout" className='w-9 h-9' />
+                            <span className="flex-1 ms-3 whitespace-nowrap">Add Employee</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/attendance" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <img src={attendance} alt="logout" className='w-9 h-9' />
+                            <span className="flex-1 ms-3 whitespace-nowrap">Attendance</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/employee-details" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <img src={employees} alt="logout" className='w-9 h-9' />
+                            <span className="flex-1 ms-3 whitespace-nowrap">Employee Details</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/defaulter" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <img src={defaulter} alt="logout" className='w-9 h-9' />
+                            <span className="flex-1 ms-3 whitespace-nowrap">Defaulters</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/videos" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <img src={video} alt="logout" className='w-9 h-9' />
+                            <span className="flex-1 ms-3 whitespace-nowrap">Video Processing</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <img src={log} alt="logout" className='w-9 h-9' />
+                            <span className="flex-1 ms-3 whitespace-nowrap">Activity Log</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/login" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <img src={logout} alt="logout" className='w-9 h-9' />
+                            <span className="flex-1 ms-3 whitespace-nowrap">Logout</span>
+                        </Link>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+    );
+};
 
-export default Sidebar
+export default Sidebar;

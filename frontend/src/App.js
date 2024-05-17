@@ -21,11 +21,12 @@ function App() {
           <Route path="/login" element={<Login />} ></Route>
           <Route path="/register" element={<Register />} ></Route>
           <Route path="/" element={<Home />} ></Route>
+          <Route path="/dashboard" element={<Home />} ></Route>
           <Route path="/attendance" element={<Attendance />} ></Route>
           <Route path="/add-employee" element={<AddEmployee />} ></Route>
           <Route path="/employee-details" element={<Employee/>} ></Route>
           <Route path="/employee-details/:id" element={<EditEmployee/>} ></Route>
-          <Route path="/defaulter/attendance" element={<AttenBased/>} ></Route>
+          <Route path="/defaulter" element={<AttenBased/>} ></Route>
           <Route path="/videos" element={<VideoPage />} ></Route>
         </Routes>
         </div>
