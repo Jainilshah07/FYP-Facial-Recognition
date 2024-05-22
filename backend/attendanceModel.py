@@ -91,7 +91,8 @@ def attendance_model(video_id):
             for i in range(0,len(names)):
                 now = datetime.now()
                 data = {
-                        "id": f'{names[i]}',
+                        "id": f'{names[i]} {now.date()}',
+                        "name": f'{names[i]}',
                         "date": f'{now.date()}',
                         "Time_In": now.strftime(r'%H:%M:%S'),
                         "In_attendance": True

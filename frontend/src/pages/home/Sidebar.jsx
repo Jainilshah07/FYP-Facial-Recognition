@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import logout from '../../assets/power-off.png'
 import adduser from '../../assets/power-off.png'
@@ -9,9 +9,13 @@ import attendance from '../../assets/attendance.png'
 import dashboard from '../../assets/dashboard.png'
 import video from '../../assets/video-processing.png'
 
-const Sidebar = () => {
+const Sidebar = ({ sidebarWidth }) => {
     return (
-        <aside id="default-sidebar" className="fixed top-0 left-0 z-40 w-[303px] h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+        <aside
+            style={{ width: sidebarWidth }}
+            className="fixed top-0 left-0 z-40 h-screen transition-transform -translate-x-full sm:translate-x-0"
+            aria-label="Sidebar"
+        >
             <div className="h-full px-3 py-4 overflow-y-auto bg-white dark:bg-gray-800">
                 <ul className="space-y-2 font-medium">
                     <li>
@@ -19,43 +23,43 @@ const Sidebar = () => {
                     </li>
                     <li>
                         <Link to="/" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <img src={dashboard} alt="logout" className='w-9 h-9' />
+                            <img src={dashboard} alt="logout" className='w-9 h-9' />
                             <span className="flex-1 ms-3 whitespace-nowrap">Dashboard</span>
                         </Link>
                     </li>
                     <li>
                         <Link to="/add-employee" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <img src={adduser} alt="logout" className='w-9 h-9' />
+                            <img src={adduser} alt="logout" className='w-9 h-9' />
                             <span className="flex-1 ms-3 whitespace-nowrap">Add Employee</span>
                         </Link>
                     </li>
                     <li>
                         <Link to="/attendance" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <img src={attendance} alt="logout" className='w-9 h-9' />
+                            <img src={attendance} alt="logout" className='w-9 h-9' />
                             <span className="flex-1 ms-3 whitespace-nowrap">Attendance</span>
                         </Link>
                     </li>
                     <li>
                         <Link to="/employee-details" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <img src={employees} alt="logout" className='w-9 h-9' />
+                            <img src={employees} alt="logout" className='w-9 h-9' />
                             <span className="flex-1 ms-3 whitespace-nowrap">Employee Details</span>
                         </Link>
                     </li>
                     <li>
                         <Link to="/defaulter" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <img src={defaulter} alt="logout" className='w-9 h-9' />
+                            <img src={defaulter} alt="logout" className='w-9 h-9' />
                             <span className="flex-1 ms-3 whitespace-nowrap">Defaulters</span>
                         </Link>
                     </li>
                     <li>
                         <Link to="/videos" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <img src={video} alt="logout" className='w-9 h-9' />
+                            <img src={video} alt="logout" className='w-9 h-9' />
                             <span className="flex-1 ms-3 whitespace-nowrap">Video Processing</span>
                         </Link>
                     </li>
                     <li>
                         <Link to="/" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <img src={log} alt="logout" className='w-9 h-9' />
+                            <img src={log} alt="logout" className='w-9 h-9' />
                             <span className="flex-1 ms-3 whitespace-nowrap">Activity Log</span>
                         </Link>
                     </li>

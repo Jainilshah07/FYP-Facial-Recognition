@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 
+
 const AttendanceDetails = () => {
   const [attendanceData, setAttendanceData] = useState([]);
   const [page, setPage] = useState(0);
@@ -54,22 +55,9 @@ const AttendanceDetails = () => {
     setPage(0);
   };
 
-  const handleEdit = (id) => {
-    // Implement edit functionality here
-    console.log("Edit button clicked for ID:", id);
-  };
-
-  const handleDelete = (id) => {
-    // Implement delete functionality here
-    console.log("Delete button clicked for ID:", id);
-  };
-
   const downloadTable = () => {
     // Implement logic to download the table attendance
     console.log("Downloading table attendance...");
-  };
-  const handleAdd = () => {
-    navigate("/add");
   };
   const filteredData = attendanceData.filter((item) => {
     const itemDate = new Date(item.date);
@@ -127,10 +115,10 @@ const AttendanceDetails = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Employee ID</TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Time In</TableCell>
+                  <TableCell style={{ fontWeight: 'bold', fontSize: '16px' }}>Employee ID</TableCell>
+                  <TableCell style={{ fontWeight: 'bold', fontSize: '16px' }}>Name</TableCell>
+                  <TableCell style={{ fontWeight: 'bold', fontSize: '16px' }}>Date</TableCell>
+                  <TableCell style={{ fontWeight: 'bold', fontSize: '16px' }}>Time In</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -139,7 +127,7 @@ const AttendanceDetails = () => {
                   .map((item, index) => (
                     <TableRow key={index}>
                       <TableCell>{index}</TableCell>
-                      <TableCell>{item.id}</TableCell>
+                      <TableCell>{item.name}</TableCell>
                       <TableCell>{item.date}</TableCell>
                       <TableCell>{item.Time_In}</TableCell>
                     </TableRow>
